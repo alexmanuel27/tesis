@@ -1,0 +1,7 @@
+modifyLineBreaks:
+  oneSentencePerLine:
+    manipulateSentences: 0
+  preserveBlankLines: 1
+  textWrapOptions:
+    columns: 80
+    removeBlockLineBreaks: 0

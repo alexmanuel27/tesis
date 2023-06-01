@@ -1,0 +1,640 @@
+\title{
+    \normalsize
+    \bfseries
+    \MakeUppercase{universidad tecnológica de la habana josé antonio
+    echeverría “cujae”
+    facultad de ingeniería automática y biomédica} \\
+    \vspace{1cm}
+    \large
+    Trabajo de diploma para optar por el título de ingeniero biomédico.\\
+    \vspace{1cm}
+    \Large
+    ``Programación de la primera estación meteorológica de origen cubano,
+    desarrollada con el fin de analizar los efectos del cambio climático en
+    la industria agrícola" }
+\author{
+    \vspace{1cm}\\
+    Lázaro Andrés O'Farrill Nuñez\\
+    https://orcid.org/0000-0002-1146-2775\\[2cm]
+    Tutores\\
+    {\normalfont Ivón Oristela Benítez}\\
+    {\normalfont Orestes Chávez}\\[2cm]
+}
+
+\date{La Habana, \the\year}
+
+\documentclass[12pt,letterpaper]{article}
+\usepackage{helvet}
+\usepackage[spanish]{babel}
+\usepackage[letterpaper,
+    left=2.5cm,
+    right=2.5cm,
+    top=2.5cm,
+    bottom=2.5cm]{geometry}
+\usepackage{hyperref}
+\usepackage{titlesec}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{tabularx}
+\usepackage{fp}
+\usepackage{bookmark}
+\usepackage{colortbl}
+
+\renewcommand{\familydefault}{\sfdefault}
+\newcommand{\fillinwidth}{.4mm}
+
+\newcolumntype{b}{X}
+\newcolumntype{s}{>{\hsize=.8\hsize}X}
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\fancyhead{}
+\fancyfoot{}
+\fancyfoot[C]{\thepage}
+
+\begin{document}
+
+    \begin{figure}[t]
+        \includegraphics{fig/logo}
+        \centering
+    \end{figure}
+
+    \maketitle
+    \thispagestyle{empty}
+    \pagenumbering{roman}
+    \linespread{1.5}
+    \renewcommand{\tablename}{Tabla}
+
+    \begin{sloppypar}
+
+        \newcommand{\espoleta}{ESPOLETA Tecnologías S.R.L.}
+        \newcommand{\client}{UNNAME~}
+
+        \renewcommand{\thesection}{\Roman{section}}
+        \renewcommand \thesubsection{\arabic{section}.\arabic{subsection}}
+        \titleformat{\section}{\normalfont\Large\bfseries\filcenter}{CAPÍTULO
+        \thesection:}{1em}{\MakeUppercase}
+
+        \newpage
+        \setcounter{secnumdepth}{0}
+
+
+        \section{Declaración de autoría}
+        Declaro que soy el único autor de este trabajo de diploma.
+        Para que así conste, firmo la presente a los días
+        \rule{1cm}{\fillinwidth} .
+
+        \vspace{1cm} \hfil Firma del autor \par
+        \vspace{1cm} \hfil \rule{6cm}{\fillinwidth} \par
+
+        \vspace{1cm} \hfil Firma del tutor \par
+        \vspace{1cm} \hfil \rule{6cm}{\fillinwidth} \par
+
+        \newpage
+
+
+        \section{Dedicatoria}
+
+        \newpage
+
+
+        \section{Agradecimientos}
+
+        \newpage
+
+
+        \section{resumen}
+
+
+        \section{abstract}
+
+        \newpage
+        \tableofcontents
+
+        \newpage
+
+        \pagenumbering{arabic}
+
+
+        \section{introducción}\label{sec:introduccion}
+        El cambio climático, afecta a diferentes sectores de la economía,
+        siendo el
+        sector agrícola uno de los más afectados cada año.
+        El aumento de las temperaturas termina por reducir la producción de los
+        cultivos deseados, a la vez que provoca la proliferación de malas
+        hierbas y
+        pestes.
+        Los cambios en los regímenes de lluvias aumentan las probabilidades
+        de fracaso
+        de las cosechas a corto plazo y de reducción de la producción a largo
+        plazo.
+        Aunque algunos cultivos en ciertas regiones del mundo puedan
+        beneficiarse, en
+        general se espera que los impactos del cambio climático sean
+        negativos para la
+        agricultura, amenazando la seguridad alimentaria mundial.
+        Por estos motivos es necesario realizar estudios estadísticos y realizar
+        análisis sobre las variables meteorológicas.
+
+        Una estación meteorológica, es el lugar donde se realizan mediciones y
+        observaciones puntuales de los diferentes parámetros meteorológicos
+        utilizando
+        los instrumentos adecuados para así poder establecer el comportamiento
+        atmosférico.
+
+        El exsecretario general de la Organización Meteorológica afirma: Una
+        estación
+        meteorológica es el lugar en el que se realizan observaciones del
+        comportamiento de la atmósfera y del medio ambiente.
+        La recopilación de datos emitidos por el instrumental meteorológico y su
+        posterior análisis y estudio permitirán la caracterización espacial y
+        temporal
+        de los fenómenos atmosféricos, así como la realización de un
+        diagnóstico de la
+        situación atmosférica en un momento dado.
+        En función a la estación meteorológica se definen tres parámetros
+        fundamentales: humedad, presión atmosférica y temperatura, además de un
+        conjunto de otras variables meteorológicas que interactúan entre sí.
+        El siguiente trabajo tiene como objetivo desarrollar el software de la
+        primera estación meteorológica de origen cubano,
+        con el fin de analizar los efectos del cambio climático en la
+        industria agrícola.
+
+        \subsection{Panorama de las estaciones
+        meteorológicas}\label{subsec:estado-del-arte}
+        Hay un gran número de compañías desarrollando estaciones meteorológicas.
+        Sin embargo estas tienen a menudo un elevado coste, o solo son
+        capaces de medir
+        un número muy limitado de variables.
+        Los fabricantes de estaciones más populares como Vantage Pro y
+        Libelium tienen
+        unidades básicas con un coste superior a los siete mil dólares
+        (\$7,0000)~\cite{botero-valenciaLowCostClimate2022a}.
+
+        También hay iniciativas dedicadas a hacer disponibles estaciones
+        automatizadas
+        de bajo coste y código abierto.
+        Entre estos proyectos es común encontrar como motivación la necesidad
+        de un
+        equipo mejor adecuado a las necesidades específicas de una región o
+        individuos
+        determinados~\cite{bernardesPrototypingLowcostAutomatic2022,
+            nettoOpensourceAutomaticWeather2019}.
+
+        La relativamente alta popularidad de la que gozan estos equipos
+        recientemente
+        se debe en gran medida a la amenaza cada vez más real del cambio
+        climático~\cite{zizingaClimateChangeMaize2022,
+            ahmadHistoricalClimateChange2022, taoClimateWarmingOutweighed2022,
+            aprakuClimateChangeSmallscale2021}.
+        A lo largo de todo el mundo las impredecibles variaciones climatológicas
+        amenazan con provocar una crisis alimentaria nunca antes
+        vista\cite{ibrahimCombatingClimateChange2022,
+            guoImpactClimateChange2022}.
+
+        \subsection{Problema científico}\label{subsec:problema-cientifico}
+        En muchos de los procesos agrícolas, conocer las variables
+        meteorológicas es de
+        vital importancia para lograr una mayor efectividad en los procesos,
+        por lo que
+        es necesario contar con un dispositivo que permita comprobar dichas
+        variables.
+
+        Debido al alto coste que conlleva la adquisición de tecnología de
+        punta en el
+        desarrollo de dispositivos, en búsqueda de la soberanía tecnológica y
+        con el
+        objetivo de poder dotar al país con tecnologías propias, en el área
+        de la
+        industria agrícola, la MIPYME \espoleta en colaboración con \client
+        se suma a
+        estas labores y lleva a cabo el diseño y desarrollo de la primera
+        estación
+        meteorológica del país.
+
+        \subsection{Objeto de estudio}\label{subsec:objeto-de-estudio}
+        Estación meteorológica Vórtice.
+
+        \subsection{Campo de investigación}\label{subsec:campo-de-investigacion}
+        Estaciones meteorológicas automatizadas.
+
+        \subsection{Métodos de
+        investigación}\label{subsec:metodos-de-investigacion}
+
+        \subsubsection{Teóricos}
+        \begin{itemize}
+            \item Hipotético-Deductivo: Elaboración de la hipótesis de
+            trabajo a partir de los
+            conocimientos teóricos y experimentales.
+            \item Histórico-Lógico: Estudio del comportamiento de
+            aplicaciones de adquisición y
+            análisis de datos para el control de la calidad en la producción de
+            dispositivos.
+            \item Analítico-Sintético: Descomposición del problema de
+            investigación en
+            subproblemas de menor complejidad para ser individualmente
+            analizados y
+            solucionados;
+            integrándose, posteriormente a la solución propuesta.
+            \item Inductivo-Deductivo: Fundamentación del uso de un sistema
+            automatizado de
+            análisis combinado para el control de la calidad.
+        \end{itemize}
+
+        \subsubsection{Empíricos}
+        \begin{itemize}
+            \item Observación: Observar directamente el equipo para apreciar
+            su estado físico y
+            evaluar los recursos informáticos a la disposición del personal
+            que trabaja en
+            el proyecto.
+            \item Experimentación: Desarrollo y análisis de resultados
+            experimentales, utilizando
+            esquemas convencionales y el nuevo sistema propuesto.
+        \end{itemize}
+
+        \subsubsection{Estadísticos}
+        \begin{itemize}
+            \item Para confirmar las estimaciones realizadas en el análisis
+            de los estimadores de
+            exactitud y precisión y comparar el sistema propuesto con los
+            sistemas
+            consultados en las referencias consultadas.
+        \end{itemize}
+
+        \subsection{Hipótesis}\label{subsec:hipotesis}
+        Si se desarrolla una estación metereológica,con prestaciones
+        similares a otras
+        estaciones existentes en el mercado internacional, con un costo de
+        producción
+        no muy elevado, para que de esta forma sea posible ofertar un equipo
+        con buenas
+        prestaciones técnicas y de seguridad, a un precio competitivo, se
+        contribuirá
+        al análisis de los efectos del cambio climático sobre los procesos
+        agrícolas.
+
+        Si se desarrolla un software para la puesta en marcha y el control de la
+        calidad de la estación meteorológica, permitirá la comprobación de los
+        parámetros técnicos del equipo y contribuirá al análisis de los
+        efectos del
+        cambio climático sobre los procesos agrícolas.
+
+        \subsection{Sistema de objetivos}\label{subsec:sistema-de-objetivos}
+
+        \subsubsection*{Objetivo general}
+        Desarrollar el software de la primera estación meteorológica de
+        origen cubano.
+
+        \subsubsection*{Objetivos específicos}
+        Para dar cumplimento al objetivo general, es necesario cumplir con
+        los siguientes objetivos específicos:
+        \begin{itemize}
+            \item Investigar el estado del arte de la estaciones
+            meteorológicas que se ofrecen
+            comercialmente, principales requerimientos técnicos, precios,
+            principales
+            empresas que las desarrollan.
+            \item Analizar el hardware (diseño electrónico) del equipo.
+            \item Implementar el protocolo de comunicación del dispositivo
+            con la computadora
+            para la transmisión y recepción de datos.
+            \item Desarrollar de manera organizada e independiente las
+            funcionalidades
+            propuestas.
+            \item Implementar el software del equipo.
+        \end{itemize}
+
+        \setcounter{secnumdepth}{3}
+
+
+        \section{Estado del arte}
+
+        \subsection{Marco Teórico}\label{subsec:antecedentes}
+        El interés de la humanidad por tratar de predecir el clima es
+        prácticamente tan
+        antiguo como la civilización.
+        En la época moderna la invención del telégrafo permitió llevar la
+        predicción
+        del clima a una velocidad nunca antes vista.
+        A medida que se expandió el telégrafo a través de los Estados Unidos
+        fue creada
+        una red vigilancia meteorológica sobre su
+        infraestructura~\cite{ThomasJeffersonTelegraph}.
+
+        No fue hasta el siglo XX que los avances en la física atmosférica
+        llevaron a
+        fundar los sistema de predicción meteorológica numéricos.
+        En su libro, ``Weather prediction by numerical
+        process''~\cite{richardsonWeatherPredictionNumerical1922}, Lewis Fry
+        Richardson
+        señala como pequeñas diferencias en los fluidos atmosféricos pueden ser
+        ignorados.
+
+        Durante la intervención de Estados Unidos en Cuba el Buró de Tiempo de
+        Washington fabrica en la loma de Casablanca una estación meteorológica
+        auxiliar.
+        En 1904 el presidente cubano Tomás Estrada Palma decreta fundar un
+        observatorio
+        cubano.
+        Por oposición la plaza de subdirector del observatorio es ocupada por el
+        Ingeniero Civil, Arquitecto, Dr.
+        en Ciencias Físicas, Dr. en Ciencias Naturales
+        y Dr. en Ciencias Marítimas José Carlos Millas Hernández.
+        Una vez ocupada esta posición creo una red de observadores basada en el
+        telégrafo.
+
+        Este fue el estado de la meteorología hasta 1944, año en que el
+        control del
+        sistema meteorológico pasa a la marina.
+        En este período se crean varias nuevas estaciones y con operarios
+        capacitados a
+        lo largo de Cuba~\cite{cubaHistoriaMeteorologiaCuba}.
+
+        \subsection{Estaciones Meteorológicas}
+
+        \subsubsection{Tipos de estaciones meteorológicas}
+        Como se
+        menciona
+        en~\cite{palaguachiencaladasoniaisabelDISENODESARROLLOIMPLEMENTACION2018}.
+        Las estaciones meteorológicas se clasifican en distintos grupos.
+        Estos aparecen representados en la
+        Tabla~\ref{tab:weather_station_classification}.
+
+        \begin{table}[htpb]
+            \begin{tabularx}{\columnwidth}{|X|X|}
+                \hline
+                {\bfseries Grupo}          & {\bfseries Clasificaciones} \\
+                \hline
+                Sinóptica                     & Climatológica               \\
+                & Agrícolas                   \\
+                & Especiales                  \\
+                & Aeronáuticas                \\
+                & Satélites                   \\
+                \hline
+                Magnitud de las observaciones & Principales                 \\
+                & Ordinarias                  \\
+                & Auxiliares                  \\
+                \hline
+                Por el nivel de observación   & Superficie                  \\
+                & Altitud                     \\
+                \hline
+                Por el nivel de observación   & Terrestre                   \\
+                & Aéreas                      \\
+                & Marítimas                   \\
+                \hline
+                Mercado Objetivo              & Doméstica                   \\
+                & Semiprofesionales           \\
+                & Profesionales               \\
+                \hline
+            \end{tabularx}
+            \caption{Clasificaciones de las estaciones meteorológicas}
+            \label{tab:weather_station_classification}
+        \end{table}
+
+        A día de hoy la red de estaciones del Instituto de Meteorología de Cuba
+        (INSTMET) cuenta con 68 estaciones profesionales
+        a lo largo del país;
+        el número más alto de la región de America Central y del
+        Caribe~\cite{CubaInstituteMeteorology}.
+
+        De acorde a lo comentado por el instituto este número es aún
+        insuficiente para
+        proveer la cobertura deseada a lo largo de todo el país.
+        También está la realidad del elevado coste de obtención de estos
+        equipos;
+        haciéndolos poco viables para el uso doméstico o sectores de menor poder
+        adquisitivo como lo son los pequeños campesinos.
+        La compra de equipos de altas prestaciones, si bien es de gran
+        necesidad para
+        el
+        sector agrícola con el objetivo de maximizar la utilización de
+        recursos y
+        prever condiciones climatológicas adversas como ciclones, huracanes,
+        sequías e
+        inundaciones~\cite{vantilburgExtremeWeatherEvents2022}, tiene un coste
+        demasiado
+        prohibitivo para implementarlo a la escala necesaria para el sector.
+
+        \subsubsection{Tipos de sensores utilizados}
+        Las estaciones meteorológicas automatizadas utilizan distintos tipos de
+        sensores.
+        Estos se diferencian en las variables que miden, principio de
+        funcionamiento y
+        precio.
+
+        \begin{table}
+            \begin{tabularx}{\linewidth}{|X|X|}
+                \hline
+                Clasificación & Identificaciones \\
+
+                \hline
+                \hline
+            \end{tabularx}
+        \end{table}
+
+        \subsubsection{Adquisición de datos}
+
+        \subsection{ESP32}
+
+        \subsection{Arduino UNO}
+
+        \newpage
+
+
+        \section{Diseño y Desarrollo de la Estación}
+        Estos son los materiales y métodos
+
+        \subsection{Consideraciones}
+
+        \subsubsection{Consideraciones Físicas}
+
+        \subsubsection{Consideraciones de Programación}
+
+        \subsection{Definición de Sensores a Utilizar}
+
+        \subsubsection{Temperatura y Humedad}
+
+        \subsubsection{Sensor de viento (Anemómetro)}
+
+        \subsubsection{Sensor de dirección del viento (Veleta)}
+
+        \subsubsection{Sensor de lluvia (Pluviómetro)}
+
+        \subsubsection{Sensor de iluminación}
+
+        \subsubsection{Sensor de detección de rayos}
+
+        \subsubsection{Sensor de presión atmosférica}
+
+        \subsection{Definición del Software Libre a Utilizar}
+
+        \subsection{Envío de datos}
+
+        \subsection{Definición del cliente}
+
+        \subsubsection{Quasar V1}
+
+        \subsubsection{Capacitor}
+
+        \newpage
+
+
+        \section{Análisis y resultados}
+
+        \subsection{Análisis Económico}\label{sec:factibilidad-del-proyecto}
+
+        \subsubsection{Aseguramiento de
+        material}\label{subsec:aseguramiento-de-material}
+        En la sede de la MIPYME \espoleta se encuentran todos los materiales
+        necesarios
+        para la fabricación y programación del equipo.
+
+        \subsubsection{Recursos humanos}\label{subsec:recursos-humanos}
+        El trabajo se realizará durante un período de un año (12 meses).
+        Para la realización de este proyecto se cuenta con dos tutores los
+        cuales
+        estarán encargados del asesoramiento de este Trabajo de Diploma y con
+        dos
+        aspirantes.
+        La Tabla \ref{tab:salary} presenta los gastos de salario
+        correspondientes a los
+        participantes, así como los días dedicados por cada uno.
+        El siguiente análisis corresponde a los meses comprendidos desde
+        enero de 2021
+        hasta diciembre de 2021.
+        La forma de calcular los salarios básicos (SB) aparece en
+        \ref{eq:salary}.
+
+        \begin{equation}
+            \label{eq:salary}
+            SB=\sum_i^n A_i * B_i
+        \end{equation}
+
+        donde:
+
+        n: Número total de participantes
+
+        Ai: Días dedicados a las investigación por participantes.
+
+        Bi: Salario diario por participantes (igual al salario mensual
+        dividido por
+        24).
+
+        \begin{table*}[htpb]
+            \begin{tabularx}{\textwidth}{|b|s|s|s|s|s|s|}
+                \hline
+                trabajador & sal / mensual & sal/diario & dias/invest.
+                & sal/basico & sal/comp & seg/soc \\
+                \hline
+                Tutor 1     & 6940 & 289.17 & 80  & 23133.33 & 2102.82 & 3533
+                .06 \\
+                Tutor 2     & 6940 & 289.17 & 80  & 23133.33 & 2102.82 & 3533
+                .06 \\
+                Aspirante 1 & 400  & 16.67  & 120 & 2000     & 181.80  & 305
+                .45  \\
+                Aspirante 2 & 400  & 16.67  & 120 & 2000     & 181.80  & 305
+                .45  \\
+                \hline
+            \end{tabularx}
+            \caption{Gastos por concepto salarial y de seguridad social.}
+            \label{tab:salary}
+        \end{table*}
+
+        \subsubsection{Recursos materiales}\label{subsec:recursos-materiales}
+        La Tabla~\ref{tab:materials} muestra los recursos materiales
+        empleados y sus
+        respectivos precios.
+
+        \begin{table}[htpb]
+            \begin{tabularx}{\columnwidth}{ |XXXX|}
+                \hline
+                Dispositivo & Cant & Precio USD & Precio CUP
+                \\
+                \hline
+                Laptop & 1 & 700 & \FPeval{\result}{clip(700*24)}      %
+                \result \\
+
+                ESP32          & 2    & 3          & \FPeval{\result}{clip
+                    (3*24)}\result \\ Arduino Nano & 2 & 2 &
+                \FPeval{\result}{clip(2*24)}\result \\ DHT22 & 1 & 0.50 &
+                \FPeval{\result}{clip(0.50*24)}\result \\ \hline Totales & 4
+                & 705.50 &
+                \FPeval{\result}{clip(16800+72+48+12)}\result \\ \hline
+            \end{tabularx}
+            \caption{Gastos por materiales directos}
+            \label{tab:materials}
+        \end{table}
+
+        \subsubsection{Recursos financieros complementarios}
+        \label{subsec:recursos-financieros-complementarios}
+        La Tabla~\ref{tab:finantial_resources} muestra los gastos totales.
+        %
+
+        \begin{table}[htpb]
+            \begin{tabularx}{\columnwidth}{|XX|}
+                \hline
+                Gastos Totales & Cant.
+                CUP \\ \hline OTROS GASTOS & 0 \\ COSTO INDIRECTO & 61009.98 \\ COSTO DIRECTO & 70896.64 \\ COSTO TOTAL (CT) & 131906.62 \\
+
+                \hline
+            \end{tabularx}\label{tab:table}
+            \caption{Gastos Totales}
+            \label{tab:finantial_resources}
+        \end{table}
+
+        El Salario Complementario \ref{eq:complementary_salary} es 9.09\% del salario
+        total anual:
+
+        \begin{equation}
+            \label{eq:complementary_salary} SC=0.0909*SB
+        \end{equation}
+
+        La Seguridad Social \ref{eq:social_security} es 14\% del total de los salarios:
+
+        \begin{equation}
+            \label{eq:social_security} SS=0.14*(SB+SC)
+        \end{equation}
+
+        Entonces el costo directo de la investigación está dado por
+        \ref{eq:direct_cost}.
+
+        \begin{equation}
+            \label{eq:direct_cost}
+            CD=SB+SC+SS+MD+DP+OG
+        \end{equation}
+
+        El costo indirecto estimado está dado por \ref{eq:indirect_cost}.
+        \begin{equation}
+            \label{eq:indirect_cost}
+            CI=1.4063*SB
+        \end{equation}
+
+        Finalmente el costo total estimado de la investigación está dado por
+        \ref{eq:total_cost}.
+        \begin{equation}
+            \label{eq:total_cost}
+            CT=CD+CI
+        \end{equation}
+
+        \subsubsection{Alcance de investigación}\label{subsec:alcance-de-investigacion}
+
+        \paragraph*{Científico-técnico}
+        El trabajo de investigación abordará el diseño, desarrollo e implementación de
+        la primera estación meteorológica
+        en nuestro país.
+
+        \paragraph*{Económico}
+        El costo del proyecto es mucho menor que los encontrados actualmente en la
+        industria meteorológica,
+        la cual se caracteriza por sus prohibitivos precios.
+        Su desarrollo contribuirá a tener una mayor independencia tecnológica para el
+        sector agrícola.
+
+        \newpage
+        \bibliographystyle{abbrv}
+        \bibliography{bibliography}
+
+    \end{sloppypar}
+\end{document}
